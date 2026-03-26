@@ -32,10 +32,12 @@ log = logging.getLogger(__name__)
 # ==========================
 TICKERS_BR: list[str] = sorted(set([
     "PETR4","LREN3","VALE3","BOVA11","ITUB4","BBDC4","B3SA3","BBAS3","ABEV3",
-    "WEGE3","SUZB3","ELET3","ELET6","PRIO3","GGBR4","CSNA3","ITSA4","BRKM3",
-    "SANB11","BRFS3","EQTL3","TIMS3","VIVT3","HAPV3","BPAC11","RENT3","KLBN11",
-    "RAIZ4","BBDC3","CMIG4","CPLE6","SBSP3","RADL3","RAIL3",
+    "WEGE3","SUZB3","PRIO3","GGBR4","CSNA3","ITSA4","BRKM3",
+    "SANB11","EQTL3","TIMS3","VIVT3","HAPV3","BPAC11","RENT3","KLBN11",
+    "RAIZ4","BBDC3","CMIG4","SBSP3","RADL3","RAIL3",
     "BEEF3","BRAV3","EMBJ3","SAPR11","MOVI3","RDOR3","USIM5","YDUQ3",
+    # Substituições: ELET3/ELET6 → CPFE3 | BRFS3 → MRFG3 | CPLE6 → TAEE11
+    "CPFE3","MRFG3","TAEE11","EGIE3",
 ]))
 
 # ==========================
@@ -309,11 +311,15 @@ def run():
 
     # ── Telegram ────────────────────────────────────────────────────────
     telegram_ok = 0
-    for s in today_sigs:      # Prioriza sinais do dia
-        if send_telegram(s["message"]):
-            telegram_ok += 1
-    if telegram_ok:
+    if today_sigs:
+        for s in today_sigs:
+            if send_telegram(s["message"]):
+                telegram_ok += 1
         log.info("Telegram: %d mensagem(ns) enviada(s).", telegram_ok)
+    else:
+        msg_vazio = f"📊 HiLo({HILO_PERIOD}) — {datetime.now():%d/%m/%Y}\n✔ Nenhuma virada detectada hoje."
+        if send_telegram(msg_vazio):
+            log.info("Telegram: aviso 'sem sinais' enviado.")
 
     # ── CSV ─────────────────────────────────────────────────────────────
     if EXPORT_CSV:
