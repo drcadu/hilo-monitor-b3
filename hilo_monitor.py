@@ -36,8 +36,9 @@ TICKERS_BR: list[str] = sorted(set([
     "SANB11","EQTL3","TIMS3","VIVT3","HAPV3","BPAC11","RENT3","KLBN11",
     "RAIZ4","BBDC3","CMIG4","SBSP3","RADL3","RAIL3",
     "BEEF3","BRAV3","EMBJ3","SAPR11","MOVI3","RDOR3","USIM5","YDUQ3",
-    # Substituições: ELET3/ELET6 → CPFE3 | BRFS3 → MRFG3 | CPLE6 → TAEE11
-    "CPFE3","MRFG3","TAEE11","EGIE3",
+    "CPFE3","TAEE11","EGIE3",
+    # Novos adicionados
+    "VULC3","TTEN3","MBRF3","BRAP4","PSSA3","CXSE3","AXIA3","FLRY3","UGPA3","KLBN4",
 ]))
 
 # ==========================
